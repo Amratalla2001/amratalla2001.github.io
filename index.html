@@ -148,23 +148,46 @@
         <a href="#contact">Contact</a>
     </nav>
 
-    <section id="about">
-        <h2>About Me</h2>
-        <img src="image2.jpg" alt="Amr Atalla" style="width:150px; height:150px; border-radius:50%; display:block; margin: 0 auto 1rem auto;">
-        <p>
-  Hi! I’m Amr, a Cybersecurity graduate (BSc, RIT 2025) with hands-on SOC experience in alert triage, log analysis, and incident response using tools like Suricata, Wireshark, and Kibana.
-</p>
-<p>
-  I’m familiar with endpoint monitoring, network traffic analysis, and security hardening. Currently, I’m pursuing HackTheBox’s CDSA (Certified Defensive Security Analyst) and CompTIA Security+ certifications.
-</p>
-<p>
-  I’m seeking a Junior SOC Analyst position to apply and deepen my technical defensive skills in a real-world environment.
-</p>
-<p>
-  Additionally, I’m interested in how AI can be integrated into blue team operations—from smarter threat detection to automating incident response. I want to contribute to research that helps us use AI to build safer, more resilient security environments.
-</p>
+<section id="about" style="max-width: 900px; margin: 50px auto; display: flex; align-items: flex-start; gap: 30px; flex-wrap: wrap; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
 
-    </section>
+  <!-- Profile Image -->
+  <div style="flex: 1; min-width: 220px; text-align: center;">
+    <img src="image2.jpg" alt="Amr Atalla" style="width: 220px; height: 220px; object-fit: cover; border-radius: 50%; box-shadow: 0 4px 20px rgba(0,0,0,0.2); transition: transform 0.3s ease;">
+  </div>
+
+  <!-- About Content -->
+  <div style="flex: 2; min-width: 280px;">
+    <h2 style="font-size: 2rem; margin-bottom: 15px; color: #222;">Hi, I’m <span style="color:#0077ff;">Amr</span> 👋</h2>
+
+    <p style="line-height: 1.6; font-size: 1rem; color: #444;">
+      I’m a <strong>Cybersecurity graduate</strong> (BSc, RIT 2025) with hands-on SOC experience in
+      <strong>alert triage</strong>, <strong>log analysis</strong>, and <strong>incident response</strong> using tools like
+      <em>Suricata</em>, <em>Wireshark</em>, <em>Kibana</em>, and <em>Microsoft Sentinel </em>.
+    </p>
+
+    <p style="line-height: 1.6; font-size: 1rem; color: #444;">
+      Skilled in endpoint monitoring, network traffic analysis, and security hardening.
+      Currently pursuing <strong>HackTheBox’s CDSA</strong> and <strong>CompTIA Security+</strong>.
+    </p>
+
+    <p style="line-height: 1.6; font-size: 1rem; color: #444;">
+      Actively seeking a <strong>Junior SOC Analyst</strong> role to deepen my defensive security skills and apply them in real-world environments.
+    </p>
+
+    <p style="line-height: 1.6; font-size: 1rem; color: #444;">
+      Passionate about integrating <strong>AI</strong> into blue team operations — from smarter threat detection to automated incident response — to build safer, more resilient security systems.
+    </p>
+  </div>
+
+</section>
+
+<!-- Hover effect for image -->
+<style>
+  #about img:hover {
+    transform: scale(1.05);
+  }
+</style>
+
 
     <section id="resume">
         <h2>Resume</h2>
@@ -215,12 +238,11 @@
             <button type="submit">Send Message</button>
         </form>
     </section>
-
+    
     <footer>
         <p>&copy; 2025 Amr Atalla. All Rights Reserved.</p>
     </footer>
 </body>
-
 </html>
 
 
