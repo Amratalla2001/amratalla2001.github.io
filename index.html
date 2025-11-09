@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Amr Atalla - Cybersecurity Portfolio, Resume, Skills & Projects">
+    <title>Amr Atalla | Cybersecurity Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #0a0a0a;
+            --bg-secondary: #111111;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-blue: #00f2fe;
+            --accent-purple: #4facfe;
+            --accent-gradient: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            --glass-bg: rgba(20, 20, 20, 0.7);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.7;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(79, 172, 254, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(0, 242, 254, 0.08) 0%, transparent 25%);
+            background-attachment: fixed;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+
+        /* --- Playful & Elegant Header --- */
+        header {
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header h1 {
+            font-size: 4rem;
+            margin: 0;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        /* Typing effect container */
+        .role-container {
+            height: 30px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        header p.typing-text {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin: 0;
+            font-family: 'Outfit', monospace; /* Monospace gives a slight cyber terminal vibe */
+        }
+
+        /* --- Frosted Glass Navigation --- */
+        nav {
+            display: flex;
+            justify-content: center;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 1rem;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            margin: 0 auto;
+            max-width: 500px;
+            border-radius: 50px;
+            border: var(--glass-border);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        nav a {
+            color: var(--text-primary);
+            margin: 0 0.8rem;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        nav a:hover {
+            background: var(--accent-gradient);
+            color: var(--bg-main);
+            transform: translateY(-2px);
+        }
+
+        section {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 2rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent-blue), transparent);
+            opacity: 0.3;
+        }
+
+        /* --- Modern About Section --- */
+        #about {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-img-wrapper {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Playful glowing blob behind image */
+        .about-img-wrapper::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-gradient);
+            filter: blur(30px);
+            opacity: 0.2;
+            z-index: -1;
+            border-radius: 50%;
+            animation: pulse 5s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.2; }
+            100% { transform: scale(1.1); opacity: 0.3; }
+        }
+
+        #about img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; /* Organic playful shape */
+            border: 2px solid rgba(255,255,255,0.1);
+            transition: all 0.5s ease;
+        }
+
+        #about img:hover {
+            border-radius: 50%;
+            transform: rotate(5deg) scale(1.05);
+            border-color: var(--accent-blue);
+        }
+
+        .about-content {
+            flex: 2;
+        }
+
+        .highlight {
+            color: var(--accent-blue);
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* --- Playful "Pill" Skills --- */
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: flex-start;
+        }
+
+        .skill-pill {
+            background: var(--glass-bg);
+            border: var(--glass-border);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy effect */
+            cursor: default;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skill-pill:hover {
+            background: var(--accent-gradient);
+            color: var(--bg-main);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 20px -10px rgba(79, 172, 254, 0.5);
+            border-color: transparent;
+        }
+
+        /* --- Elegant Project Cards --- */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--glass-bg);
+            border: var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
+            border-color: var(--accent-purple);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover img {
+            opacity: 1;
+        }
+
+        .cert-image {
+            width: 100% !important;
+            height: 150px !important;
+            object-fit: contain !important;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-bottom: var(--glass-border);
+            cursor: zoom-in;
+        }
+
+        .cert-image:focus {
+            outline: 3px solid rgba(0,242,254,0.18);
+            outline-offset: 4px;
+        }
+
+        .cert-image:hover {
+            opacity: 1 !important;
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+
+        /* Lightbox modal for enlarging certification images */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.85);
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            z-index: 1200;
+        }
+
+        .lightbox.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .lightbox .lightbox-img {
+            max-width: 92%;
+            max-height: 92%;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+        }
+
+        .lightbox .close {
+            position: absolute;
+            top: 18px;
+            right: 26px;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+        }
+
+        @media (max-width: 480px) {
+            .cert-image { height: 120px !important; }
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            margin-top: 0;
+            color: #fff;
+        }
+
+        /* --- Buttons & Form --- */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--text-primary);
+            color: var(--bg-main);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn.primary {
+            background: var(--accent-gradient);
+            color: var(--bg-main);
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px -10px rgba(79, 172, 254, 0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent-blue);
+            color: var(--bg-main);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #2a2a2a;
+            border-radius: 12px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            box-sizing: border-box; /* Fixes width issues */
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            background: #151515;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            margin-top: 4rem;
+            background: #050505;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        /* Mobile responsiveness tweaks */
+        @media (max-width: 768px) {
+            header h1 { font-size: 3rem; }
+            #about { flex-direction: column; text-align: center; }
+            nav { top: 10px; width: 90%; flex-wrap: wrap; }
+        }
+        
+        /* Scroll Animation Initial State */
+    .pop-in {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+        transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); /* lively bounce effect */
+    }
+
+    /* State when visible */
+    .pop-in.visible {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    /* Stagger delays for skill pills for extra playfulness */
+    .skill-pill:nth-child(2n) { transition-delay: 0.1s; }
+    .skill-pill:nth-child(3n) { transition-delay: 0.2s; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#about">About</a>
+        <a href="#resume">Resume</a>
+        <a href="#skills">Skills</a>
+        <a href="projects.html">Projects</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <header>
+        <h1>Amr Atalla</h1>
+        <div class="role-container">
+            <p class="typing-text">🛡️ Cybersecurity Enthusiast | SOC Analyst | SIEM Specialist</p>
+        </div>
+    </header>
+
+    <section id="about">
+        <div class="about-img-wrapper">
+            <img src="image2.jpg" alt="Amr Atalla">
+        </div>
+
+        <div class="about-content">
+            <h2>Hi, I’m <span style="color: var(--accent-blue); margin-left: 10px;">Amr</span> 👋</h2>
+            <p>
+                I’m a <strong>Cybersecurity graduate</strong> (BSc, RIT 2025) and a SOC Analyst at IT Butler E-Services. Currently, I specialize in
+                <span class="highlight">alert triaging</span>, <span class="highlight">log analysis</span>, and <span class="highlight">incident response</span>.
+            </p>
+            <p>
+                I don't just watch alerts; I investigate them. Utilizing SIEM tools like <em>Elastic</em> and <em>Qradar</em>. <em>Darktrace</em> as an NDR, and <em>MS Defender as an EDR</em>. I dig deep into network traffic and computer registries to find what others might miss.
+            </p>
+            <p>
+               Additionally, I’m leveling up with <strong>CCNA</strong> and <strong>AS-200</strong>. I am actively learning, trying to leverage automation tools to increase efficiency and productivity and attempting to integrate AI into digital secuirty.
+            </p>
+        </div>
+    </section>
+
+<section id="skills">
+        <h2>Skills & Toolkit 🧰</h2>
+        <div class="skills">
+            <div class="skill-pill">📊 Splunk</div>
+            <div class="skill-pill">📡 QRadar</div>
+            <div class="skill-pill">📉 Elastic Stack</div>
+            
+            <div class="skill-pill">🛡️ MS Defender</div>
+            <div class="skill-pill">🤖 Darktrace</div>
+            <div class="skill-pill">🚨 Incident Response</div>
+            <div class="skill-pill">🕸️ Wireshark</div>
+            
+            <div class="skill-pill">🎫 GLPI (Ticketing)</div>
+            <div class="skill-pill">📝 Log Analysis</div>
+            <div class="skill-pill">🧠 Threat Intelligence</div>
+            <div class="skill-pill">🐍 Python Scripting</div>
+            <div class="skill-pill">🐧 Linux CLI</div>
+        </div>
+    </section>
+
+    <section id="education-certs">
+        <h2>Education & Certs 🎓</h2>
+        <div class="project-grid">
+            <div class="project-card pop-in">
+                <img src="diploma.jpg" data-full="diploma.jpg" alt="RIT Diploma" class="cert-image" role="button" tabindex="0">
+                <div class="project-content">
+                    <h3 style="color: var(--accent-blue);">Rochester Institute of Technology (RIT)</h3>
+                    <p style="font-size: 1.1rem; margin-top: 10px;">BSc, Cybersecurity</p>
+
+                </div>
+            </div>
+
+            <div class="project-card pop-in">
+                <img src="sec+.jpg" data-full="sec+.jpg" alt="CompTIA Security+" class="cert-image" role="button" tabindex="0">
+                <div class="project-content">
+                    <h3 style="color: var(--accent-blue);">CompTIA Security+</h3>
+                    <p style="font-size: 1.1rem; margin-top: 10px;">Certified in Cybersecurity and Validates core cybersecurity skills.</p>
+
+                </div>
+            </div>
+
+            <div class="project-card pop-in">
+                <img src="cc.jpg" data-full="cc.jpg" alt="(ISC)² CC" class="cert-image" role="button" tabindex="0">
+                <div class="project-content">
+                    <h3 style="color: var(--accent-blue);">(ISC)² CC</h3>
+                    <p style="font-size: 1.1rem; margin-top: 10px;">Certified in Cybersecurity</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Projects Preview 🧪</h2>
+        <div class="project-grid">
+            <div class="project-card">
+                <img src="images.png" alt="SIEM Log Analysis">
+                <div class="project-content">
+                    <h3>SIEM Log Analysis</h3>
+                    <p>Deep dive into simulated incident logs in Microsoft Sentinel. From alert trigger to full remediation.</p>
+                    <a class="btn primary" href="project1.html">View Case Study</a>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="images.png" alt="Splunk Threat Detection">
+                <div class="project-content">
+                    <h3>Splunk Threat Hunter</h3>
+                    <p>Engineered a custom lab environment to detect and analyze live brute-force and phishing attack vectors.</p>
+                    <a class="btn primary" href="project2.html">View Lab</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="resume" style="text-align: center; background: var(--glass-bg); border-radius: 20px; border: var(--glass-border);">
+        <h2 style="justify-content: center;">Resume 📄</h2>
+        <p style="color: var(--text-secondary);">Ready to see the full details? Grab a copy of my CV below.</p>
+        <div style="margin-top: 2rem;">
+            <a class="btn btn-outline" href="AmrAtalla_CV.pdf" target="_blank" style="margin-right: 1rem;">Preview</a>
+            <a class="btn primary" href="AmrAtalla_CV.pdf" download>Download PDF</a>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Let's Connect 📬</h2>
+        <p style="margin-bottom: 2rem; color: var(--text-secondary);">Interested in my Cybersecurity services or just want to chat about the future of cybersecurity? Drop me a message.</p>
+        <form action="https://formspree.io/f/xldloknj" method="POST" style="display: flex; flex-direction: column; gap: 1rem;">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="_replyto" placeholder="Your Email" required>
+            <textarea name="message" rows="6" placeholder="Your Message..." required></textarea>
+            <button type="submit" class="btn primary" style="border:none; cursor: pointer; font-size: 1rem;">Send Message 🚀</button>
+        </form>
+    </section>
+    
+    <footer>
+        <p>Designed & Secured by Amr Atalla &copy; 2025</p>
+    </footer>
+    <script>
+    // Simple Intersection Observer to trigger animations on scroll
+    const observerOptions = {
+        threshold: 0.15 // Triggers when 15% of the element is visible
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Optional: Stop observing once visible to keep it on screen
+                // observer.unobserve(entry.target); 
+            }
+        });
+    }, observerOptions);
+
+    // Target elements to animate: About sections, Skill pills, Project cards
+    document.querySelectorAll('#about > div, .skill-pill, .project-card').forEach((el) => {
+        el.classList.add('pop-in');
+        observer.observe(el);
+    });
+
+    // --- Lightbox for certification images ---
+    (function() {
+        // Create lightbox element and append to body
+        const lightbox = document.createElement('div');
+        lightbox.id = 'lightbox';
+        lightbox.className = 'lightbox';
+        lightbox.innerHTML = '<button class="close" aria-label="Close">&times;</button>' +
+                             '<img class="lightbox-img" src="" alt="Enlarged image">';
+        document.body.appendChild(lightbox);
+
+        const lbImg = lightbox.querySelector('.lightbox-img');
+        const lbClose = lightbox.querySelector('.close');
+
+        function openLightbox(src, alt) {
+            lbImg.src = src;
+            lbImg.alt = alt || 'Enlarged image';
+            lightbox.classList.add('visible');
+            // Prevent background scroll while modal is open
+            document.documentElement.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('visible');
+            lbImg.src = '';
+            document.documentElement.style.overflow = '';
+            document.body.style.overflow = '';
+        }
+
+        // Open when clicking or pressing Enter/Space on cert images
+        document.querySelectorAll('.cert-image').forEach(img => {
+            // Ensure keyboard accessibility attributes exist (if not already set in HTML)
+            if (!img.hasAttribute('role')) img.setAttribute('role', 'button');
+            if (!img.hasAttribute('tabindex')) img.setAttribute('tabindex', '0');
+            img.style.cursor = 'zoom-in';
+
+            img.addEventListener('click', () => openLightbox(img.dataset.full || img.src, img.alt));
+            img.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openLightbox(img.dataset.full || img.src, img.alt);
+                }
+            });
+        });
+
+        // Close when clicking outside the image, or pressing the close button
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+        lbClose.addEventListener('click', closeLightbox);
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    })();
+
+</script>
+</body>
+</html>
+
+
+
