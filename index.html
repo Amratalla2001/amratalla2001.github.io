@@ -6,6 +6,7 @@
     <meta name="description" content="Amr Atalla - Cybersecurity Portfolio, Resume, Skills & Projects">
     <title>Amr Atalla | Cybersecurity Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --bg-main: #0a0a0a;
@@ -26,13 +27,25 @@
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
-            background-color: var(--bg-main);
+            background-color: var(--bg-main); 
             color: var(--text-primary);
             line-height: 1.7;
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(79, 172, 254, 0.08) 0%, transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(0, 242, 254, 0.08) 0%, transparent 25%);
-            background-attachment: fixed;
+        }
+
+        /* --- Full Page Particle Background --- */
+        #particles-bg {
+            position: fixed; /* Stays in background on scroll */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Background layer */
+        }
+
+        /* --- Page Content Wrapper --- */
+        .page-content {
+            position: relative; /* Sits on top of the background */
+            z-index: 1; /* Foreground layer */
         }
 
         h1, h2, h3 {
@@ -40,12 +53,10 @@
             font-weight: 700;
         }
 
-        /* --- Playful & Elegant Header --- */
+        /* --- Header Styling --- */
         header {
-            padding: 6rem 2rem 4rem;
+            padding: 8rem 2rem 6rem;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
 
         header h1 {
@@ -59,10 +70,7 @@
             letter-spacing: -1px;
         }
 
-        /* Typing effect container */
         .role-container {
-            height: 30px;
-            overflow: hidden;
             margin-top: 1rem;
         }
 
@@ -70,20 +78,20 @@
             font-size: 1.4rem;
             color: var(--text-secondary);
             margin: 0;
-            font-family: 'Outfit', monospace; /* Monospace gives a slight cyber terminal vibe */
+            font-family: 'Outfit', monospace;
         }
 
         /* --- Frosted Glass Navigation --- */
         nav {
             display: flex;
             justify-content: center;
-            background: rgba(10, 10, 10, 0.8);
+            background: rgba(10, 10, 10, 0.8); 
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             padding: 1rem;
             position: sticky;
             top: 20px;
-            z-index: 100;
+            z-index: 100; 
             margin: 0 auto;
             max-width: 500px;
             border-radius: 50px;
@@ -108,6 +116,7 @@
             transform: translateY(-2px);
         }
 
+        /* --- General Section Styling --- */
         section {
             max-width: 1000px;
             margin: 60px auto;
@@ -145,7 +154,6 @@
             justify-content: center;
         }
 
-        /* Playful glowing blob behind image */
         .about-img-wrapper::before {
             content: '';
             position: absolute;
@@ -168,7 +176,7 @@
             width: 250px;
             height: 250px;
             object-fit: cover;
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; /* Organic playful shape */
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
             border: 2px solid rgba(255,255,255,0.1);
             transition: all 0.5s ease;
         }
@@ -186,11 +194,87 @@
         .highlight {
             color: var(--accent-blue);
             font-weight: 600;
-            position: relative;
-            display: inline-block;
+        }
+
+        /* --- Education & Certs Section --- */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .education-card {
+            background: var(--glass-bg); 
+            border: var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s ease;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .edu-icon {
+            font-size: 2.5rem;
+            min-width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .education-card h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .edu-date, .edu-id {
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            opacity: 0.8;
+        }
+
+        .education-card p {
+            margin: 0 0 1rem 0;
+            color: var(--text-secondary);
+            flex-grow: 1; /* Ensures text fills space, pushing image down */
+        }
+
+        /* --- Clickable Certificate Image --- */
+        .cert-img-wrapper {
+            display: block; 
+            margin-top: auto; 
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: zoom-in; /* Indicates it's clickable */
+            transition: transform 0.3s ease; 
+        }
+
+        .cert-img-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block; 
+        }
+
+        .cert-img-wrapper:hover {
+            transform: scale(1.03); /* Lifts the image wrapper on hover */
         }
 
         /* --- Playful "Pill" Skills --- */
+        #skills {
+            max-width: 1200px;
+        }
+        
         .skills {
             display: flex;
             flex-wrap: wrap;
@@ -199,13 +283,13 @@
         }
 
         .skill-pill {
-            background: var(--glass-bg);
+            background: var(--glass-bg); 
             border: var(--glass-border);
             padding: 0.8rem 1.5rem;
             border-radius: 50px;
             font-weight: 500;
             font-family: 'Outfit', sans-serif;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy effect */
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: default;
             display: flex;
             align-items: center;
@@ -220,6 +304,9 @@
             border-color: transparent;
         }
 
+        .skill-pill:nth-child(2n) { transition-delay: 0.1s; }
+        .skill-pill:nth-child(3n) { transition-delay: 0.2s; }
+
         /* --- Elegant Project Cards --- */
         .project-grid {
             display: grid;
@@ -228,12 +315,11 @@
         }
 
         .project-card {
-            background: var(--glass-bg);
+            background: var(--glass-bg); 
             border: var(--glass-border);
             border-radius: 20px;
             overflow: hidden;
             transition: all 0.4s ease;
-            position: relative;
         }
 
         .project-card:hover {
@@ -252,68 +338,6 @@
 
         .project-card:hover img {
             opacity: 1;
-        }
-
-        .cert-image {
-            width: 100% !important;
-            height: 150px !important;
-            object-fit: contain !important;
-            padding: 1rem;
-            background: var(--bg-secondary);
-            border-bottom: var(--glass-border);
-            cursor: zoom-in;
-        }
-
-        .cert-image:focus {
-            outline: 3px solid rgba(0,242,254,0.18);
-            outline-offset: 4px;
-        }
-
-        .cert-image:hover {
-            opacity: 1 !important;
-            transform: scale(1.05);
-            transition: transform 0.3s ease;
-        }
-
-        /* Lightbox modal for enlarging certification images */
-        .lightbox {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0,0,0,0.85);
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.25s ease;
-            z-index: 1200;
-        }
-
-        .lightbox.visible {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .lightbox .lightbox-img {
-            max-width: 92%;
-            max-height: 92%;
-            border-radius: 8px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
-        }
-
-        .lightbox .close {
-            position: absolute;
-            top: 18px;
-            right: 26px;
-            color: #fff;
-            font-size: 2rem;
-            cursor: pointer;
-            background: transparent;
-            border: none;
-        }
-
-        @media (max-width: 480px) {
-            .cert-image { height: 120px !important; }
         }
 
         .project-content {
@@ -337,6 +361,7 @@
             margin-top: 1rem;
             transition: all 0.3s ease;
             border: 2px solid transparent;
+            cursor: pointer;
         }
 
         .btn.primary {
@@ -360,6 +385,12 @@
             color: var(--bg-main);
         }
 
+        #contact form {
+            display: flex; 
+            flex-direction: column; 
+            gap: 1rem;
+        }
+
         input, textarea {
             width: 100%;
             padding: 1rem;
@@ -369,7 +400,7 @@
             color: var(--text-primary);
             font-family: 'Poppins', sans-serif;
             transition: all 0.3s ease;
-            box-sizing: border-box; /* Fixes width issues */
+            box-sizing: border-box;
         }
 
         input:focus, textarea:focus {
@@ -378,254 +409,290 @@
             background: #151515;
         }
 
+        /* --- Footer --- */
         footer {
             text-align: center;
             padding: 3rem 1rem;
             margin-top: 4rem;
-            background: #050505;
+            background: #050505; /* Solid background for footer */
             color: var(--text-secondary);
             font-size: 0.9rem;
             border-top: 1px solid #1a1a1a;
         }
 
-        /* Mobile responsiveness tweaks */
+        /* --- Scroll Animation --- */
+        .pop-in {
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .pop-in.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        
+        /* --- Mobile Responsiveness --- */
         @media (max-width: 768px) {
             header h1 { font-size: 3rem; }
             #about { flex-direction: column; text-align: center; }
-            nav { top: 10px; width: 90%; flex-wrap: wrap; }
+            nav { top: 10px; width: 90%; flex-wrap: wrap; justify-content: space-around; }
+            nav a { margin: 0 0.2rem; padding: 0.5rem 0.8rem; }
         }
-        
-        /* Scroll Animation Initial State */
-    .pop-in {
-        opacity: 0;
-        transform: translateY(30px) scale(0.9);
-        transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); /* lively bounce effect */
-    }
-
-    /* State when visible */
-    .pop-in.visible {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-
-    /* Stagger delays for skill pills for extra playfulness */
-    .skill-pill:nth-child(2n) { transition-delay: 0.1s; }
-    .skill-pill:nth-child(3n) { transition-delay: 0.2s; }
     </style>
 </head>
 <body>
 
-    <nav>
-        <a href="#about">About</a>
-        <a href="#resume">Resume</a>
-        <a href="#skills">Skills</a>
-        <a href="projects.html">Projects</a>
-        <a href="#contact">Contact</a>
-    </nav>
+    <div id="particles-bg"></div> 
 
-    <header>
-        <h1>Amr Atalla</h1>
-        <div class="role-container">
-            <p class="typing-text">🛡️ Cybersecurity Enthusiast | SOC Analyst | SIEM Specialist</p>
-        </div>
-    </header>
+    <div class="page-content">
 
-    <section id="about">
-        <div class="about-img-wrapper">
-            <img src="image2.jpg" alt="Amr Atalla">
-        </div>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#education">Certs</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#resume">Resume</a>
+            <a href="#contact">Contact</a>
+        </nav>
 
-        <div class="about-content">
-            <h2>Hi, I’m <span style="color: var(--accent-blue); margin-left: 10px;">Amr</span> 👋</h2>
-            <p>
-                I’m a <strong>Cybersecurity graduate</strong> (BSc, RIT 2025) and a SOC Analyst at IT Butler E-Services. Currently, I specialize in
-                <span class="highlight">alert triaging</span>, <span class="highlight">log analysis</span>, and <span class="highlight">incident response</span>.
-            </p>
-            <p>
-                I don't just watch alerts; I investigate them. Utilizing SIEM tools like <em>Elastic</em> and <em>Qradar</em>. <em>Darktrace</em> as an NDR, and <em>MS Defender as an EDR</em>. I dig deep into network traffic and computer registries to find what others might miss.
-            </p>
-            <p>
-               Additionally, I’m leveling up with <strong>CCNA</strong> and <strong>AS-200</strong>. I am actively learning, trying to leverage automation tools to increase efficiency and productivity and attempting to integrate AI into digital security.
-            </p>
-        </div>
-    </section>
+        <header>
+            <h1>Amr Atalla</h1>
+            <div class="role-container">
+                <p class="typing-text">🛡️ Cybersecurity Enthusiast | SOC Analyst | SIEM Specialist</p>
+            </div>
+        </header>
 
-<section id="skills">
-        <h2>Skills & Toolkit 🧰</h2>
-        <div class="skills">
-            <div class="skill-pill">📊 Splunk</div>
-            <div class="skill-pill">📡 QRadar</div>
-            <div class="skill-pill">📉 Elastic Stack</div>
-            
-            <div class="skill-pill">🛡️ MS Defender</div>
-            <div class="skill-pill">🤖 Darktrace</div>
-            <div class="skill-pill">🚨 Incident Response</div>
-            <div class="skill-pill">🕸️ Wireshark</div>
-            
-            <div class="skill-pill">🎫 GLPI (Ticketing)</div>
-            <div class="skill-pill">📝 Log Analysis</div>
-            <div class="skill-pill">🧠 Threat Intelligence</div>
-            <div class="skill-pill">🐍 Python Scripting</div>
-            <div class="skill-pill">🐧 Linux CLI</div>
-        </div>
-    </section>
-
-    <section id="education-certs">
-        <h2>Education & Certs 🎓</h2>
-        <div class="project-grid">
-            <div class="project-card pop-in">
-                <img src="diploma.jpg" data-full="diploma.jpg" alt="RIT Diploma" class="cert-image" role="button" tabindex="0">
-                <div class="project-content">
-                    <h3 style="color: var(--accent-blue);">Rochester Institute of Technology (RIT)</h3>
-                    <p style="font-size: 1.1rem; margin-top: 10px;">BSc, Cybersecurity</p>
-
-                </div>
+        <section id="about">
+            <div class="about-img-wrapper pop-in">
+                <img src="image2.jpg" alt="Amr Atalla">
             </div>
 
-            <div class="project-card pop-in">
-                <img src="sec+.jpg" data-full="sec+.jpg" alt="CompTIA Security+" class="cert-image" role="button" tabindex="0">
-                <div class="project-content">
-                    <h3 style="color: var(--accent-blue);">CompTIA Security+</h3>
-                    <p style="font-size: 1.1rem; margin-top: 10px;">Certified in Cybersecurity and Validates core cybersecurity skills.</p>
+            <div class="about-content pop-in">
+                <h2>Hi, I’m <span style="color: var(--accent-blue); margin-left: 10px;">Amr</span> 👋</h2>
+                <p>
+                    I’m a <strong>Cybersecurity graduate</strong> (BSc, RIT 2025) with hands-on SOC experience in
+                    <span class="highlight">alert triage</span>, <span class="highlight">log analysis</span>, and <span class="highlight">incident response</span>.
+                </p>
+                <p>
+                    I don't just watch alerts; I investigate them. Utilizing tools like <em>Microsoft Sentinel</em>, <em>Suricata</em>, and <em>Wireshark</em>, I dig deep into network traffic to find what others might miss.
+                </p>
+                <p>
+                   Currently leveling up with <strong>HackTheBox’s CDSA</strong> and <strong>CompTIA Security+</strong> while seeking a Junior SOC role where I can bring my passion for defensive security and AI integration to a real-world team.
+                </p>
+            </div>
+        </section>
 
+        <section id="education">
+            <h2>Education & Certifications 🎓</h2>
+            <div class="education-grid">
+                
+                <div class="education-card pop-in">
+                    <div class="card-header">
+                        <span class="edu-icon">🏫</span>
+                        <div>
+                            <h3>Rochester Institute of Technology</h3>
+                            <span class="edu-date">Graduated 2025</span>
+                        </div>
+                    </div>
+                    <p>BSc in Cybersecurity (UAE Campus)</p>
+                    
+                    <a href="images/rit_degree.jpg" target="_blank" class="cert-img-wrapper" title="View Certificate">
+                        <img src="diploma.jpg" alt="RIT Degree Certificate">
+                    </a> 
+                </div>
+
+                <div class="education-card pop-in">
+                    <div class="card-header">
+                        <span class="edu-icon">🛡️</span>
+                        <div>
+                            <h3>CompTIA Security+</h3>
+                            <span class="edu-id">ID: CompTIA-SECPLUS</span>
+                        </div>
+                    </div>
+                    <p>Performance-based network security</p>
+                    
+                    <a href="images/secplus.jpg" target="_blank" class="cert-img-wrapper" title="View Certificate">
+                        <img src="sec+.jpg" alt="Security+ Certificate">
+                    </a>
+                </div>
+
+                <div class="education-card pop-in">
+                    <div class="card-header">
+                        <span class="edu-icon">🔒</span>
+                        <div>
+                            <h3>(ISC)² Certified in Cybersecurity</h3>
+                            <span class="edu-id">ID: ISC2-CC</span>
+                        </div>
+                    </div>
+                    <p>Foundational cybersecurity knowledge</p>
+
+                    <a href="images/isc2-cc.jpg" target="_blank" class="cert-img-wrapper" title="View Certificate">
+                        <img src="cc.jpg" alt="ISC2 Certificate">
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2>Skills & Toolkit 🧰</h2>
+            <div class="skills">
+                <div class="skill-pill">🔍 Microsoft Sentinel</div>
+                <div class="skill-pill">📊 Splunk</div>
+                <div class="skill-pill">📡 QRadar</div>
+                <div class="skill-pill">📉 Elastic Stack</div>
+                <div class="skill-pill">🛡️ MS Defender</div>
+                <div class="skill-pill">🤖 Darktrace</div>
+                <div class="skill-pill">🚨 Incident Response</div>
+                <div class="skill-pill">🕸️ Wireshark</div>
+                <div class="skill-pill">🎫 GLPI (Ticketing)</div>
+                <div class="skill-pill">📝 Log Analysis</div>
+                <div class="skill-pill">🧠 Threat Intelligence</div>
+                <div class="skill-pill">🐍 Python Scripting</div>
+                <div class="skill-pill">🐧 Linux CLI</div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Projects Preview 🧪</h2>
+            <div class="project-grid">
+                <div class="project-card pop-in">
+                    <img src="images.png" alt="SIEM Log Analysis">
+                    <div class="project-content">
+                        <h3>SIEM Log Analysis</h3>
+                        <p>Deep dive into simulated incident logs in Microsoft Sentinel. From alert trigger to full remediation.</p>
+                        <a class="btn primary" href="project1.html">View Case Study</a>
+                    </div>
+                </div>
+                <div class="project-card pop-in">
+                    <img src="images.png" alt="Splunk Threat Detection">
+                    <div class="project-content">
+                        <h3>Splunk Threat Hunter</h3>
+                        <p>Engineered a custom lab environment to detect and analyze live brute-force and phishing attack vectors.</p>
+                        <a class="btn primary" href="project2.html">View Lab</a>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="project-card pop-in">
-                <img src="cc.jpg" data-full="cc.jpg" alt="(ISC)² CC" class="cert-image" role="button" tabindex="0">
-                <div class="project-content">
-                    <h3 style="color: var(--accent-blue);">(ISC)² CC</h3>
-                    <p style="font-size: 1.1rem; margin-top: 10px;">Certified in Cybersecurity</p>
-                </div>
+        <section id="resume" style="text-align: center; background: var(--glass-bg); border-radius: 20px; border: var(--glass-border);">
+            <h2 style="justify-content: center;">Resume 📄</h2>
+            <p style="color: var(--text-secondary);">Ready to see the full details? Grab a copy of my CV below.</p>
+            <div style="margin-top: 2rem;">
+                <a class="btn btn-outline" href="AmrAtalla_CV.pdf" target="_blank" style="margin-right: 1rem;">Preview</a>
+                <a class="btn primary" href="AmrAtalla_CV.pdf" download>Download PDF</a>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="projects">
-        <h2>Projects Preview 🧪</h2>
-        <div class="project-grid">
-            <div class="project-card">
-                <img src="images.png" alt="SIEM Log Analysis">
-                <div class="project-content">
-                    <h3>SIEM Log Analysis</h3>
-                    <p>Deep dive into simulated incident logs in Microsoft Sentinel. From alert trigger to full remediation.</p>
-                    <a class="btn primary" href="project1.html">View Case Study</a>
-                </div>
-            </div>
-            <div class="project-card">
-                <img src="images.png" alt="Splunk Threat Detection">
-                <div class="project-content">
-                    <h3>Splunk Threat Hunter</h3>
-                    <p>Engineered a custom lab environment to detect and analyze live brute-force and phishing attack vectors.</p>
-                    <a class="btn primary" href="project2.html">View Lab</a>
-                </div>
-            </div>
-        </div>
-    </section>
+        <section id="contact">
+            <h2>Let's Connect 📬</h2>
+            <p style="margin-bottom: 2rem; color: var(--text-secondary);">Interested in my SOC skills or just want to chat about the latest threat intel? Drop me a message.</p>
+            <form action="https://formspree.io/f/xldloknj" method="POST">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="_replyto" placeholder="Your Email" required>
+                <textarea name="message" rows="6" placeholder="Your Message..." required></textarea>
+                <button type="submit" class="btn primary">Send Message 🚀</button>
+            </form>
+        </section>
+        
+        <footer>
+            <p>Designed & Secured by Amr Atalla &copy; 2025</p>
+        </footer>
 
-    <section id="resume" style="text-align: center; background: var(--glass-bg); border-radius: 20px; border: var(--glass-border);">
-        <h2 style="justify-content: center;">Resume 📄</h2>
-        <p style="color: var(--text-secondary);">Ready to see the full details? Grab a copy of my CV below.</p>
-        <div style="margin-top: 2rem;">
-            <a class="btn btn-outline" href="AmrAtalla_CV.pdf" target="_blank" style="margin-right: 1rem;">Preview</a>
-            <a class="btn primary" href="AmrAtalla_CV.pdf" download>Download PDF</a>
-        </div>
-    </section>
+    </div> <script>
+        const observerOptions = {
+            threshold: 0.15
+        };
 
-    <section id="contact">
-        <h2>Let's Connect 📬</h2>
-        <p style="margin-bottom: 2rem; color: var(--text-secondary);">Interested in my Cybersecurity services or just want to chat about the future of cybersecurity? Drop me a message.</p>
-        <form action="https://formspree.io/f/xldloknj" method="POST" style="display: flex; flex-direction: column; gap: 1rem;">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="_replyto" placeholder="Your Email" required>
-            <textarea name="message" rows="6" placeholder="Your Message..." required></textarea>
-            <button type="submit" class="btn primary" style="border:none; cursor: pointer; font-size: 1rem;">Send Message 🚀</button>
-        </form>
-    </section>
-    
-    <footer>
-        <p>Designed & Secured by Amr Atalla &copy; 2025</p>
-    </footer>
-    <script>
-    // Simple Intersection Observer to trigger animations on scroll
-    const observerOptions = {
-        threshold: 0.15 // Triggers when 15% of the element is visible
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                // Optional: Stop observing once visible to keep it on screen
-                // observer.unobserve(entry.target); 
-            }
-        });
-    }, observerOptions);
-
-    // Target elements to animate: About sections, Skill pills, Project cards
-    document.querySelectorAll('#about > div, .skill-pill, .project-card').forEach((el) => {
-        el.classList.add('pop-in');
-        observer.observe(el);
-    });
-
-    // --- Lightbox for certification images ---
-    (function() {
-        // Create lightbox element and append to body
-        const lightbox = document.createElement('div');
-        lightbox.id = 'lightbox';
-        lightbox.className = 'lightbox';
-        lightbox.innerHTML = '<button class="close" aria-label="Close">&times;</button>' +
-                             '<img class="lightbox-img" src="" alt="Enlarged image">';
-        document.body.appendChild(lightbox);
-
-        const lbImg = lightbox.querySelector('.lightbox-img');
-        const lbClose = lightbox.querySelector('.close');
-
-        function openLightbox(src, alt) {
-            lbImg.src = src;
-            lbImg.alt = alt || 'Enlarged image';
-            lightbox.classList.add('visible');
-            // Prevent background scroll while modal is open
-            document.documentElement.style.overflow = 'hidden';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeLightbox() {
-            lightbox.classList.remove('visible');
-            lbImg.src = '';
-            document.documentElement.style.overflow = '';
-            document.body.style.overflow = '';
-        }
-
-        // Open when clicking or pressing Enter/Space on cert images
-        document.querySelectorAll('.cert-image').forEach(img => {
-            // Ensure keyboard accessibility attributes exist (if not already set in HTML)
-            if (!img.hasAttribute('role')) img.setAttribute('role', 'button');
-            if (!img.hasAttribute('tabindex')) img.setAttribute('tabindex', '0');
-            img.style.cursor = 'zoom-in';
-
-            img.addEventListener('click', () => openLightbox(img.dataset.full || img.src, img.alt));
-            img.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    openLightbox(img.dataset.full || img.src, img.alt);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
                 }
             });
-        });
+        }, observerOptions);
 
-        // Close when clicking outside the image, or pressing the close button
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) closeLightbox();
+        document.querySelectorAll('.pop-in, .skill-pill').forEach((el) => {
+            if (!el.classList.contains('pop-in')) {
+                el.classList.add('pop-in');
+            }
+            observer.observe(el);
         });
-        lbClose.addEventListener('click', closeLightbox);
+    </script>
 
-        // Close on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeLightbox();
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        particlesJS('particles-bg', {
+          "particles": {
+            "number": {
+              "value": 80,
+              "density": {
+                "enable": true,
+                "value_area": 800
+              }
+            },
+            "color": {
+              "value": "#ffffff"
+            },
+            "shape": {
+              "type": "circle"
+            },
+            "opacity": {
+              "value": 0.5,
+              "random": true
+            },
+            "size": {
+              "value": 3,
+              "random": true
+            },
+            "line_linked": {
+              "enable": true,
+              "distance": 150,
+              "color": "#4facfe",
+              "opacity": 0.3,
+              "width": 1
+            },
+            "move": {
+              "enable": true,
+              "speed": 2,
+              "direction": "none",
+              "random": false,
+              "straight": false,
+              "out_mode": "out",
+              "bounce": false
+            }
+          },
+          "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+              "onhover": {
+                "enable": true,
+                "mode": "grab"
+              },
+              "onclick": {
+                "enable": true,
+                "mode": "push"
+              },
+              "resize": true
+            },
+            "modes": {
+              "grab": {
+                "distance": 140,
+                "line_linked": {
+                  "opacity": 0.8
+                }
+              },
+              "push": {
+                "particles_nb": 4
+              }
+            }
+          },
+          "retina_detect": true
         });
-    })();
+    </script>
 
-</script>
 </body>
 </html>
 
