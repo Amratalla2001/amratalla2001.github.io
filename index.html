@@ -250,7 +250,7 @@
         }
 
         /* --- Clickable Certificate Image --- */
-        .cert-img-wrapper {
+        .cert-image {
             display: block; 
             margin-top: auto; 
             border-radius: 12px;
@@ -258,16 +258,60 @@
             border: 1px solid rgba(255,255,255,0.1);
             cursor: zoom-in; /* Indicates it's clickable */
             transition: transform 0.3s ease; 
-        }
-
-        .cert-img-wrapper img {
             width: 100%;
             height: auto;
-            display: block; 
         }
 
-        .cert-img-wrapper:hover {
-            transform: scale(1.03); /* Lifts the image wrapper on hover */
+        .cert-image:hover {
+            transform: scale(1.03); /* Lifts the image on hover */
+        }
+
+        /* --- Lightbox Pop-up Styling --- */
+        .lightbox {
+            position: fixed;
+            inset: 0; /* (top, right, bottom, left: 0) */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(5px);
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1200;
+        }
+
+        .lightbox.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .lightbox-img {
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            /* Pop-in animation */
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .lightbox.visible .lightbox-img {
+            transform: scale(1);
+        }
+
+        /* Close button */
+        .lightbox-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 2.5rem;
+            color: white;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            line-height: 1;
         }
 
         /* --- Playful "Pill" Skills --- */
@@ -497,9 +541,7 @@
                     </div>
                     <p>BSc in Cybersecurity (UAE Campus)</p>
                     
-                    <a href="images/rit_degree.jpg" target="_blank" class="cert-img-wrapper" title="View Certificate">
-                        <img src="diploma.jpg" alt="RIT Degree Certificate">
-                    </a> 
+                    <img src="images/rit_degree.jpg" data-full="images/rit_degree.jpg" alt="RIT Degree Certificate" class="cert-image">
                 </div>
 
                 <div class="education-card pop-in">
@@ -512,9 +554,7 @@
                     </div>
                     <p>Performance-based network security</p>
                     
-                    <a href="images/secplus.jpg" target="_blank" class="cert-img-wrapper" title="View Certificate">
-                        <img src="sec+.jpg" alt="Security+ Certificate">
-                    </a>
+                    <img src="images/secplus.jpg" data-full="images/secplus.jpg" alt="Security+ Certificate" class="cert-image">
                 </div>
 
                 <div class="education-card pop-in">
@@ -527,9 +567,7 @@
                     </div>
                     <p>Foundational cybersecurity knowledge</p>
 
-                    <a href="images/isc2-cc.jpg" target="_blank" class="cert-img-wrapper" title="View Certificate">
-                        <img src="cc.jpg" alt="ISC2 Certificate">
-                    </a>
+                    <img src="images/isc2-cc.jpg" data-full="images/isc2-cc.jpg" alt="ISC2 Certificate" class="cert-image">
                 </div>
 
             </div>
@@ -691,11 +729,58 @@
           },
           "retina_detect": true
         });
+    </Gscript>
+
+    <script>
+        // Create the lightbox HTML elements once
+        const lightbox = document.createElement('div');
+        lightbox.id = 'lightbox';
+        lightbox.className = 'lightbox';
+        
+        const lightboxImg = document.createElement('img');
+        lightboxImg.className = 'lightbox-img';
+        
+        const closeButton = document.createElement('button');
+        closeButton.className = 'lightbox-close';
+        closeButton.innerHTML = '&times;';
+        
+        lightbox.appendChild(lightboxImg);
+        lightbox.appendChild(closeButton);
+        document.body.appendChild(lightbox);
+
+        // Function to open the lightbox
+        function openLightbox(src, alt) {
+            lightboxImg.src = src;
+            lightboxImg.alt = alt;
+            lightbox.classList.add('visible');
+            document.documentElement.style.overflow = 'hidden'; // Stop background scrolling
+        }
+
+        // Function to close the lightbox
+        function closeLightbox() {
+            lightbox.classList.remove('visible');
+            document.documentElement.style.overflow = ''; // Allow scrolling again
+        }
+
+        // Add click event to all cert images
+        document.querySelectorAll('.cert-image').forEach(img => {
+            img.addEventListener('click', () => {
+                // Use the 'data-full' path for the full-size image
+                openLightbox(img.dataset.full, img.alt);
+            });
+        });
+
+        // Add click event to close button and the background
+        closeButton.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) { // Only close if clicking the background
+                closeLightbox();
+            }
+        });
     </script>
 
 </body>
 </html>
-
 
 
 
