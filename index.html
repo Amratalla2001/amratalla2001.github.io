@@ -438,14 +438,14 @@
             overflow: hidden;
             border: 2px solid var(--glass-border);
             background: var(--glass-bg);
-            /* *** UPDATED: Reduced size to 30% of column width (was 90%) *** */
-            max-width: 30%; 
-            margin: 0 auto; /* Center the image in its grid column */
+            /* *** DEFAULT/DESKTOP: Full width (Normal size for the column) *** */
+            max-width: 100%; 
+            margin: 0 auto; 
             transition: all 0.5s ease;
         }
 
         .image-wrapper:hover {
-            transform: scale(1.1); /* Slight zoom on hover */
+            transform: scale(1.05); /* Keep dynamic zoom */
             box-shadow: 0 0 40px rgba(0, 255, 255, 0.5), 0 0 10px rgba(0, 102, 255, 0.5); 
         }
 
@@ -1342,4 +1342,5 @@
         });
     </script>
 </body>
+
 </html>
