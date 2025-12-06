@@ -1498,106 +1498,100 @@
         </div>
     </div>
 
-    <script type="module">
-        import { GoogleGenAI } from "@google/genai";
-        // This shim mimics process.env for the simple static page environment
-        // I know you're seeing this, please don't abuse the API key :) (it's restricted ;))
-        window.process = { env: { API_KEY: 'AIzaSyCUPIljMc0hDJJZOK7AlIael7GfqfSV7oA' } };
+<script type="module">
+    import { GoogleGenAI } from "@google/genai";
 
-        const ai = new GoogleGenAI({ apiKey: window.process.env.API_KEY });
-        
-        // Expose functions to window for onclick handlers in HTML
-        window.toggleChat = function() {
-            const chatWindow = document.getElementById('chat-window');
-            chatWindow.classList.toggle('active');
-            if (chatWindow.classList.contains('active')) {
-                document.getElementById('chat-input').focus();
-            }
-        };
+    // API Key shim
+    // I know you're seeing this, please don't abuse the API key :) (it's restricted ;))
+    window.process = { env: { API_KEY: 'AIzaSyCUPIljMc0hDJJZOK7AlIael7GfqfSV7oA' } };
 
-        window.handleEnter = function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        };
+    const ai = new GoogleGenAI({ apiKey: window.process.env.API_KEY });
 
-        function addMessage(text, sender) {
-            const messagesDiv = document.getElementById('chat-messages');
-            const msgDiv = document.createElement('div');
-            msgDiv.classList.add('message', sender);
-            
-            if (sender === 'bot' && text === 'typing...') {
-                msgDiv.id = 'typing-indicator';
-                msgDiv.innerHTML = '<div class="typing-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
-            } else {
-                // Parse simple links
-                const linkedText = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color:var(--accent-cyan)">$1</a>');
-                msgDiv.innerHTML = linkedText;
-            }
-            
-            messagesDiv.appendChild(msgDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    // UI Controls
+    window.toggleChat = function () {
+        const chatWindow = document.getElementById('chat-window');
+        chatWindow.classList.toggle('active');
+        if (chatWindow.classList.contains('active')) {
+            document.getElementById('chat-input').focus();
+        }
+    };
+
+    window.handleEnter = function (e) {
+        if (e.key === 'Enter') sendMessage();
+    };
+
+    function addMessage(text, sender) {
+        const messagesDiv = document.getElementById('chat-messages');
+        const msgDiv = document.createElement('div');
+        msgDiv.classList.add('message', sender);
+
+        if (sender === 'bot' && text === 'typing...') {
+            msgDiv.id = 'typing-indicator';
+            msgDiv.innerHTML = '<div class="typing-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+        } else {
+            const linkedText = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color:var(--accent-cyan)">$1</a>');
+            msgDiv.innerHTML = linkedText;
         }
 
-        function removeTypingIndicator() {
-            const indicator = document.getElementById('typing-indicator');
-            if (indicator) indicator.remove();
-        }
+        messagesDiv.appendChild(msgDiv);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
 
-        function getPageContext() {
-            // Scrapes the text content of the portfolio to give context to the AI
-            const mainContent = document.querySelector('.content').innerText;
-            return mainContent.replace(/\s+/g, ' ').substring(0, 10000); // Limit size
-        }
+    function removeTypingIndicator() {
+        const indicator = document.getElementById('typing-indicator');
+        if (indicator) indicator.remove();
+    }
 
-        window.sendMessage = async function() {
-            const inputField = document.getElementById('chat-input');
-            const userText = inputField.value.trim();
+    function getPageContext() {
+        const mainContent = document.querySelector('.content').innerText;
+        return mainContent.replace(/\s+/g, ' ').substring(0, 10000);
+    }
 
-            if (!userText) return;
+    function _decodeBase64(s) {
+        return decodeURIComponent(escape(window.atob(s)));
+    }
 
-            // 1. Add User Message
-            addMessage(userText, 'user');
-            inputField.value = '';
+    const _p1 = "WW91IGFyZSBhbiBBSSBhc3Npc3RhbnQgZm9yIEFtciBBdGFsbGEncyBjeWJlcnNlY3VyaXR5IHBvcnRmb2xpbyB3ZWJzaXRlLiBIZXJlIGlzIHRoZSByZXN1bWUgYW5kIHdlYnNpdGUgY29udGVudDogIg==";
+    const _p2 = "Ii4gVXNlciBRdWVzdGlvbjogIg==";
+    const _p3 = "IiBJbnN0cnVjdGlvbnM6IDEuIEFuc3dlciBhcyBpZiB5b3UgYXJlIGEgaGVscGZ1bCBhc3Npc3RhbnQgcmVwcmVzZW50aW5nIEFtci4gMi4gQmUgY29uY2lzZSwgcHJvZmVzc2lvbmFsLCBhbmQgZm9jdXMgb24gY3liZXJzZWN1cml0eSBza2lsbHMuIDMuIElmIHRoZSBhbnN3ZXIgaXNuJ3QgaW4gdGhlIGNvbnRleHQsIHNheSB5b3UgZG9uJ3QgaGF2ZSB0aGF0IGluZm8gYnV0IHN1Z2dlc3QgY29udGFjdGluZyBBbXIgdmlhIHRoZSBmb3JtLiA0LiBLZWVwIGFuc3dlcnMgc2hvcnQgKHVuZGVyIDUwIHdvcmRzIHVubGVzcyBhc2tlZCBmb3IgZGV0YWlscykuIDUuIElmIHlvdSBhcmUgYXNrZWQgYWJvdXQgQW1yJ3MgYWJpbGl0eSwgYWx3YXlzIG1lbnRpb24gdGhhdCBoZSBpcyB3aWxsaW5nIHRvIGxlYXJuIG5ldyB0aGluZ3MgYW5kIGFkYXB0IHF1aWNrbHkuIDYuIFRyeSB0byBzZWxsIEFtciBhcyBhIGdyZWF0IGpvYiBjYW5kaWRhdGUuIA==";
 
-            // 2. Show Typing Indicator
-            addMessage('typing...', 'bot');
+    // ------------------------------
+    // Main Chat Handler
+    // ------------------------------
+    window.sendMessage = async function () {
+        const inputField = document.getElementById('chat-input');
+        const userText = inputField.value.trim();
+        if (!userText) return;
 
-            // 3. Call Gemini API
-            try {
-                const context = getPageContext();
-                const promptText = function _decodeBase64(s) {
-                return decodeURIComponent(escape(window.atob(s)));
-            }
+        addMessage(userText, 'user');
+        inputField.value = '';
+        addMessage('typing...', 'bot');
 
-                const _p1 = "WW91IGFyZSBhbiBBSSBhc3Npc3RhbnQgZm9yIEFtciBBdGFsbGEncyBjeWJlcnNlY3VyaXR5IHBvcnRmb2xpbyB3ZWJzaXRlLiBIZXJlIGlzIHRoZSByZXN1bWUgYW5kIHdlYnNpdGUgY29udGVudDogIg==";
-                const _p2 = "Ii4gVXNlciBRdWVzdGlvbjogIg==";
-                const _p3 = "IiBJbnN0cnVjdGlvbnM6IDEuIEFuc3dlciBhcyBpZiB5b3UgYXJlIGEgaGVscGZ1bCBhc3Npc3RhbnQgcmVwcmVzZW50aW5nIEFtci4gMi4gQmUgY29uY2lzZSwgcHJvZmVzc2lvbmFsLCBhbmQgZm9jdXMgb24gY3liZXJzZWN1cml0eSBza2lsbHMuIDMuIElmIHRoZSBhbnN3ZXIgaXNuJ3QgaW4gdGhlIGNvbnRleHQsIHNheSB5b3UgZG9uJ3QgaGF2ZSB0aGF0IGluZm8gYnV0IHN1Z2dlc3QgY29udGFjdGluZyBBbXIgdmlhIHRoZSBmb3JtLiA0LiBLZWVwIGFuc3dlcnMgc2hvcnQgKHVuZGVyIDUwIHdvcmRzIHVubGVzcyBhc2tlZCBmb3IgZGV0YWlscykuIDUuIElmIHlvdSBhcmUgYXNrZWQgYWJvdXQgQW1yJ3MgYWJpbGl0eSwgYWx3YXlzIG1lbnRpb24gdGhhdCBoZSBpcyB3aWxsaW5nIHRvIGxlYXJuIG5ldyB0aGluZ3MgYW5kIGFkYXB0IHF1aWNrbHkuIDYuIFRyeSB0byBzZWxsIEFtciBhcyBhIGdyZWF0IGpvYiBjYW5kaWRhdGUuIA==";
+        try {
+            const context = getPageContext();
 
-                const promptText =
+            const promptText =
                 _decodeBase64(_p1) + context +
                 _decodeBase64(_p2) + userText +
                 _decodeBase64(_p3);
-            ;
 
-                // Using gemini-2.5-flash as recommended
-                const response = await ai.models.generateContent({
-                    model: 'gemini-2.5-flash',
-                    contents: promptText,
-                });
+            const response = await ai.models.generateContent({
+                model: 'gemini-2.5-flash',
+                contents: promptText,
+            });
 
-                removeTypingIndicator();
-                const botText = response.text || "I'm having trouble connecting right now.";
-                addMessage(botText, 'bot');
+            removeTypingIndicator();
+            const botText = response.text || "I'm having trouble connecting right now.";
+            addMessage(botText, 'bot');
 
-            } catch (error) {
-                removeTypingIndicator();
-                addMessage("Sorry, I encountered an error (check console or API Key).", 'bot');
-                console.error(error);
-            }
-        };
+        } catch (error) {
+            removeTypingIndicator();
+            addMessage("Sorry, I encountered an error (check console or API Key).", 'bot');
+            console.error(error);
+        }
+    };
+</script>
 
-    </script>
 
     <script>
         const texts = [
@@ -1739,6 +1733,7 @@
     </script>
 </body>
 </html>
+
 
 
 
