@@ -1566,18 +1566,19 @@
             // 3. Call Gemini API
             try {
                 const context = getPageContext();
-                const promptText = `
-                    You are an AI assistant for Amr Atalla's cybersecurity portfolio website. 
-                    Here is the resume and website content: "${context}".
-                    
-                    User Question: "${userText}"
-                    
-                    Instructions:
-                    1. Answer as if you are a helpful assistant representing Amr.
-                    2. Be concise, professional, and focus on cybersecurity skills.
-                    3. If the answer isn't in the context, say you don't have that info but suggest contacting Amr via the form.
-                    4. Keep answers short (under 50 words unless asked for details).
-                `;
+                const promptText = function _decodeBase64(s) {
+                return decodeURIComponent(escape(window.atob(s)));
+            }
+
+                const _p1 = "WW91IGFyZSBhbiBBSSBhc3Npc3RhbnQgZm9yIEFtciBBdGFsbGEncyBjeWJlcnNlY3VyaXR5IHBvcnRmb2xpbyB3ZWJzaXRlLiBIZXJlIGlzIHRoZSByZXN1bWUgYW5kIHdlYnNpdGUgY29udGVudDogIg==";
+                const _p2 = "Ii4gVXNlciBRdWVzdGlvbjogIg==";
+                const _p3 = "IiBJbnN0cnVjdGlvbnM6IDEuIEFuc3dlciBhcyBpZiB5b3UgYXJlIGEgaGVscGZ1bCBhc3Npc3RhbnQgcmVwcmVzZW50aW5nIEFtci4gMi4gQmUgY29uY2lzZSwgcHJvZmVzc2lvbmFsLCBhbmQgZm9jdXMgb24gY3liZXJzZWN1cml0eSBza2lsbHMuIDMuIElmIHRoZSBhbnN3ZXIgaXNuJ3QgaW4gdGhlIGNvbnRleHQsIHNheSB5b3UgZG9uJ3QgaGF2ZSB0aGF0IGluZm8gYnV0IHN1Z2dlc3QgY29udGFjdGluZyBBbXIgdmlhIHRoZSBmb3JtLiA0LiBLZWVwIGFuc3dlcnMgc2hvcnQgKHVuZGVyIDUwIHdvcmRzIHVubGVzcyBhc2tlZCBmb3IgZGV0YWlscykuIDUuIElmIHlvdSBhcmUgYXNrZWQgYWJvdXQgQW1yJ3MgYWJpbGl0eSwgYWx3YXlzIG1lbnRpb24gdGhhdCBoZSBpcyB3aWxsaW5nIHRvIGxlYXJuIG5ldyB0aGluZ3MgYW5kIGFkYXB0IHF1aWNrbHkuIDYuIFRyeSB0byBzZWxsIEFtciBhcyBhIGdyZWF0IGpvYiBjYW5kaWRhdGUuIA==";
+
+                const promptText =
+                _decodeBase64(_p1) + context +
+                _decodeBase64(_p2) + userText +
+                _decodeBase64(_p3);
+            ;
 
                 // Using gemini-2.5-flash as recommended
                 const response = await ai.models.generateContent({
@@ -1738,6 +1739,7 @@
     </script>
 </body>
 </html>
+
 
 
 
