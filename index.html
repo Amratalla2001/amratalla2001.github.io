@@ -1503,7 +1503,7 @@
 
     // API Key shim
     // I know you're seeing this, please don't abuse the API key :) (it's restricted ;))
-    window.process = { env: { API_KEY: 'AIzaSyCUPIljMc0hDJJZOK7AlIael7GfqfSV7oA' } };
+    window.process = { env: { API_KEY: '' } };
 
     const ai = new GoogleGenAI({ apiKey: window.process.env.API_KEY });
 
