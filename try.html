@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated IP & URL Enrichment SOAR Pipeline</title>
+    <style>
+        :root {
+            --bg-color: #0f1115;
+            --sidebar-bg: #1a1d24;
+            --text-main: #c9d1d9;
+            --accent-color: #00ff66; /* n8n-inspired green */
+            --border-color: #30363d;
+            --hover-bg: #21262d;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 300px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            text-align: left;
+            padding: 15px 20px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--hover-bg);
+            color: white;
+        }
+
+        .nav-btn.active {
+            background-color: var(--hover-bg);
+            color: var(--accent-color);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        /* Content Area Styles */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .step-section {
+            display: none;
+            max-width: 900px;
+            margin: 0 auto;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .step-section.active {
+            display: block;
+        }
+
+        h1 { color: white; border-bottom: 2px solid var(--accent-color); padding-bottom: 10px; }
+        h2 { color: white; margin-top: 30px; }
+        p { line-height: 1.6; font-size: 1.05rem; }
+        
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* Image Placeholder */
+        .img-placeholder {
+            width: 100%;
+            min-height: 300px;
+            background-color: #21262d;
+            border: 2px dashed #484f58;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8b949e;
+            margin: 20px 0;
+            font-family: monospace;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: var(--sidebar-bg);
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--hover-bg);
+            color: white;
+        }
+
+        /* Navigation Buttons Bottom */
+        .content-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .action-btn {
+            background-color: var(--hover-bg);
+            color: white;
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background-color: var(--accent-color);
+            color: black;
+        }
+
+        code {
+            background-color: rgba(255,255,255,0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: var(--accent-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>SOAR Pipeline Walkthrough</h2>
+        </div>
+        <button class="nav-btn active" onclick="showStep(0)">1. Introduction</button>
+        <button class="nav-btn" onclick="showStep(1)">2. Why n8n?</button>
+        <button class="nav-btn" onclick="showStep(2)">3. Architecture & Impact</button>
+        <button class="nav-btn" onclick="showStep(3)">4. Step 1: Trigger</button>
+        <button class="nav-btn" onclick="showStep(4)">5. Step 2 & 3: OSINT Scans</button>
+        <button class="nav-btn" onclick="showStep(5)">6. Step 4: AlienVault</button>
+        <button class="nav-btn" onclick="showStep(6)">7. Step 5 & 6: Data Merge</button>
+        <button class="nav-btn" onclick="showStep(7)">8. Step 7: AI Synthesis</button>
+        <button class="nav-btn" onclick="showStep(8)">9. Step 8: Update Target</button>
+        <button class="nav-btn" onclick="showStep(9)">10. End Product</button>
+    </div>
+
+    <div class="main-content">
+        
+        <div class="step-section active" id="step-0">
+            <h1>Building an Automated IP & URL Enrichment SOAR Pipeline </h1>
+            <p>As a cybersecurity graduate focused on Security Operations, I’ve seen firsthand how 'alert fatigue' can cripple a SOC. Every minute an analyst spends manually copy-pasting an IP into VirusTotal is a minute they aren't hunting for real threats.</p>
+            <p>This project is a practical implementation of <span class="highlight">SOAR (Security Orchestration, Automation, and Response)</span> principles, designed to turn a manual, repetitive triage process into a fully automated intelligence pipeline.</p>
+            
+            <h2>Why is this Automation important for SOC Analysts?</h2>
+            <p>In a typical SOC environment, Tier 1 analysts are bombarded with hundreds of low-level alerts daily. The manual investigation process is flawed for three reasons:</p>
+            <ul>
+                <li><strong>Time Inefficiency:</strong> Manually checking multiple OSINT sources (VirusTotal, AlienVault, urlscan.io) for every single alert takes 5–10 minutes per indicator.</li>
+                <li><strong>Human Error:</strong> Under pressure, analysts might miss a 'Pulse' in AlienVault or misinterpret a raw JSON score.</li>
+                <li><strong>Data Silos:</strong> Threat data is often scattered across browser tabs rather than being centralized and analysed in context.</li>
+            </ul>
+
+            <h2>How did this automation make this process more efficient?</h2>
+            <p>To solve this, I built a low-code automation workflow using <span class="highlight">n8n</span> that functions as a force multiplier for the analyst.The system works in three phases:</p>
+            <ul>
+                <li><strong>Ingestion:</strong> Automatically detects new indicators added to a centralized investigation sheet.</li>
+                <li><strong>Multi-Source Enrichment:</strong> Queries VirusTotal, AlienVault OTX, and urlscan.io in parallel to gather reputation, campaign history, and visual evidence (screenshots).</li>
+                <li><strong>AI Synthesis:</strong> Uses a Large Language Model (LLM) to correlate the raw data and generate a human-readable verdict and technical summary.</li>
+            </ul>
+            <p>The result? A comprehensive security report delivered in under 60 seconds, allowing analysts to make informed decisions at a glance.</p>
+            <p><em>Note: It is important to only consider this for prioritizing and getting quick and brief details about an alert, but further investigation must be conducted beyond the AI analysis as we are working in a sensitive field where accuracy is crucial and context matters.</em></p>
+        </div>
+
+        <div class="step-section" id="step-1">
+            <h1>The Engine: What is n8n? </h1>
+            <p>n8n is a "Fair-Code" workflow automation platform that is specifically favoured by technical teams and Security Engineers. Think of it as the "Swiss Army Knife" for SOC automation. </p>
+            
+            <h2>Why I chose n8n for this SOAR Project:</h2>
+            <ul>
+                <li><strong>Node-Based Visual Logic:</strong> It allows for complex, multi-branching workflows that mimic real-world SOC decision-making. If one tool fails or returns a specific result, the workflow can "branch" and take a different path, something linear tools struggle with. </li>
+                <li><strong>Self-Hostable & Secure:</strong> Unlike many SaaS platforms, n8n can be self-hosted. For a cybersecurity professional, this is critical because it ensures that sensitive data (like internal IP addresses or API keys) stays within your own controlled environment. </li>
+                <li><strong>The "Low-Code" Advantage:</strong> It strikes a perfect balance between speed and power. While it has a drag-and-drop interface, it also allows me to inject JavaScript/Python code nodes whenever I need to perform complex data parsing or custom logic. </li>
+                <li><strong>Deep API Integration:</strong> Using the HTTP Request node, I can connect to virtually any security tool with an API, even if a pre-built connector doesn't exist. This allowed me to seamlessly integrate VirusTotal, AlienVault, and urlscan.io into a single pane of glass. </li>
+            </ul>
+        </div>
+
+        <div class="step-section" id="step-2">
+            <h1>Technical Architecture & Impact </h1>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Manual Process</th>
+                        <th>My Automated Workflow</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Triage Time</td>
+                        <td>5-10 Minutes</td>
+                        <td>&lt; 60 Seconds</td>
+                    </tr>
+                    <tr>
+                        <td>Tools Checked</td>
+                        <td>1 at a time (sequential)</td>
+                        <td>3+ at a time (parallel)</td>
+                    </tr>
+                    <tr>
+                        <td>Evidence</td>
+                        <td>Manually check screenshots</td>
+                        <td>Screenshot URL ready</td>
+                    </tr>
+                    <tr>
+                        <td>Final Report</td>
+                        <td>Full manual Report/notes</td>
+                        <td>AI-Generated JSON Summary + Analyst modification</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p></p>
+
+            <img src="image1.png" alt="Google Sheets Trigger" style="max-width: 100%; border: 1px solid #30363d; border-radius: 8px;">
+            
+        </div>
+
+        <div class="step-section" id="step-3">
+            <h1>Step 1: Google Sheets Trigger</h1>
+            <p>The first node that will be added is the Google sheets trigger that triggers whenever a new row has been added.</p>
+            <p>In this node, you can modify the poll times, which determines the time interval between each time the google sheet is being checked for a new row being added.</p>
+            
+           <img src="image1.png" alt="Google Sheets Trigger" style="max-width: 100%; border: 1px solid #30363d; border-radius: 8px;">
+        </div>
+
+        <div class="step-section" id="step-4">
+            <h1>Steps 2 & 3: Initial OSINT Enrichment</h1>
+            
+            <h2>urlscan.io Scanning</h2>
+            <p>We will then connect the urlscan.io node, to the Google Sheets trigger, where it will perform a scan based on the URL, which is the IP address added into the google sheets row. </p>
+            <p><em>Note: We can simply drag the “input URL/IP” field from our google sheets trigger and place it in the URL field.</em></p>
+            
+            <img src="image3.png" alt="Google Sheets Trigger" style="max-width: 100%; border: 1px solid #30363d; border-radius: 8px;">
+
+            <h2>VirusTotal Integration</h2>
+            <p>Connect the VirusTotal node, to the Google Sheets trigger, where it will perform a scan based on the URL, which is the IP address added into the google sheets row. </p>
+            <p><em>Note: We can simply drag the “input URL/IP” field from our google sheets trigger and place it in the URL field.</em></p>
+
+           <img src="image4.png" alt="Google Sheets Trigger" style="max-width: 100%; border: 1px solid #30363d; border-radius: 8px;">
+        </div>
+
+        <div class="step-section" id="step-5">
+            <h1>Step 4: AlienVault OTX</h1>
+            <p>We will then connect the AlienVault node, to the Google Sheets trigger, where it will perform a scan based on the URL, which is the IP address added into the google sheets row.</p>
+            <p><em>Note: We can simply drag the “input URL/IP” field from our google sheets trigger and place it in the URL field.</em></p>
+            
+            <img src="image5.png" alt="Google Sheets Trigger" style="max-width: 100%; border: 1px solid #30363d; border-radius: 8px;">
+        </div>
+
+        <div class="step-section" id="step-6">
+            <h1>Steps 5 & 6: Merging Data Streams</h1>
+            <p>Since we need to combine all the data collected from the 3 nodes, we will add a merge node as each node can only take an input from 1 node, while a merge node can take input from 2.</p>
+            
+            <h2>Merge 1</h2>
+            <p>Merge 1 will combine VT and urlscan.io as demonstrated below. ]</p>
+            <img src="image6.png" alt="Google Sheets Trigger" style="max-width: 100%; border: 1px solid #30363d; border-radius: 8px;">
+
+            <h2>Merge 2</h2>
+            <p>Merge 2 will combine merge 1 and AlienVault as demonstrated below. </p>
+            <img src="image7.png" alt="Google Sheets Trigger" style="max-width: 100%; border: 1px solid #30363d; border-radius: 8px;">
+        </div>
+
+        <div class="step-section" id="step-7">
+            <h1>Step 7: AI Synthesis</h1>
+            <p>Add a LLM chain node, where we will enter our prompt to the AI to give us our desired output using key pieces of data collected from the Threat Intelligence Platforms. [a: 51]</p>
+            <p>This LLM chain node is also connected to a “google gemini chat model”, which is the brains that do the analysis and thinking of the prompt that was given in the LLM chain node.</p>
+            
+            <h2>Sample Prompt:</h2>
+            <pre style="background:#21262d; padding:15px; border-radius:8px; overflow-x:auto; color:var(--text-main);">
+“You are a Senior SOC Analyst. Analyze the following indicators:
+VirusTotal Score: {{ $node["VirusTotal"].json["data"]["attributes"]["last_analysis_stats"]["malicious"] }} / {{ $node["VirusTotal"].json["data"]["attributes"]["last_analysis_stats"]["harmless"] }}{{ $('VirusTotal').item.json.data.attributes.reputation }}
+AlienVault Pulses: {{ $('AlienVault HTTP Request').item.json.pulse_info.count }} {{ $('AlienVault HTTP Request').item.json.pulse_info.pulses }} 
+urlscan.io Verdict: {{ $('urlscan.io').item.json.result }} 
+ASN/Country: {{ $json.data.attributes.asn }} 
+
+Provide your response in valid JSON with these fields: 
+analysis: A 1-sentence technical summary. 
+verdict: (Benign, Suspicious, or Malicious) 
+confidence: A percentage (0-100%) based on how much the tools agree.
+reasoning: Explain why you gave that confidence score, including Virustotal, urlscan.io, and data from otx, including the otx pulses and mention in brief what known threat actors is it linked to if available."
+            </pre>
+
+            <img src="image8.png" alt="Google Sheets Trigger" style="max-width: 100%; border: 1px solid #30363d; border-radius: 8px;">
+        </div>
+
+        <div class="step-section" id="step-8">
+            <h1>Step 8: Updating the Google Sheet </h1>
+            <p>Finally, we will add an “update sheet” google sheet. This node places all the new data collected to the columns from our choosing.</p>
+            <p>Simply add columns on the google sheets, and you will see them in the node.</p>
+            <p>To enter an exact value, drag from the input section the field you want to be displayed in a specific column as demonstrated in the screenshot below.</p>
+            
+            <img src="image9.png" alt="Google Sheets Trigger" style="max-width: 100%; border: 1px solid #30363d; border-radius: 8px;">
+        </div>
+
+        <div class="step-section" id="step-9">
+            <h1>End Product</h1>
+            <p>Based on the values we added on the “merge 2” node, we can finally see the google sheets auto update with the ingested data after the automation was automatically triggered when an IP and date were added into a new row.</p>
+            
+            <img src="image10.png" alt="Google Sheets Trigger" style="max-width: 100%; border: 1px solid #30363d; border-radius: 8px;">
+        </div>
+
+        <div class="content-nav">
+            <button class="action-btn" id="prev-btn" onclick="navigate(-1)" style="visibility: hidden;">&larr; Previous</button>
+            <button class="action-btn" id="next-btn" onclick="navigate(1)">Next &rarr;</button>
+        </div>
+        
+        <div style="text-align: center; margin-top: 50px; font-size: 0.8rem; color: #8b949e;">
+            Walkthrough created by Amr Atalla
+        </div>
+
+    </div>
+
+    <script>
+        let currentStep = 0;
+        const totalSteps = 10; // 0 to 9
+
+        function showStep(stepIndex) {
+            // Hide all steps
+            document.querySelectorAll('.step-section').forEach(el => el.classList.remove('active'));
+            // Remove active class from all nav buttons
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+            
+            // Show selected step
+            document.getElementById('step-' + stepIndex).classList.add('active');
+            // Highlight selected button
+            document.querySelectorAll('.nav-btn')[stepIndex].classList.add('active');
+            
+            currentStep = stepIndex;
+            updateControls();
+            
+            // Scroll to top of content
+            document.querySelector('.main-content').scrollTop = 0;
+        }
+
+        function navigate(direction) {
+            let newStep = currentStep + direction;
+            if (newStep >= 0 && newStep < totalSteps) {
+                showStep(newStep);
+            }
+        }
+
+        function updateControls() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            if (currentStep === 0) {
+                prevBtn.style.visibility = 'hidden';
+            } else {
+                prevBtn.style.visibility = 'visible';
+            }
+
+            if (currentStep === totalSteps - 1) {
+                nextBtn.style.visibility = 'hidden';
+            } else {
+                nextBtn.style.visibility = 'visible';
+            }
+        }
+    </script>
+</body>
+</html>
