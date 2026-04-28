@@ -45,6 +45,19 @@
             color: white;
         }
 
+        .back-link {
+            display: inline-block;
+            color: #8b949e; /* Subtle grey to match theme */
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            transition: color 0.2s ease;
+        }
+        
+        .back-link:hover {
+            color: var(--accent-color); /* Turns n8n green on hover */
+        }
+
         .nav-btn {
             background: none;
             border: none;
@@ -176,6 +189,7 @@
 
     <div class="sidebar">
         <div class="sidebar-header">
+            <a href="index.html" class="back-link">&larr; Back to Portfolio</a>
             <h2>SOAR Pipeline Walkthrough</h2>
         </div>
         <button class="nav-btn active" onclick="showStep(0)">1. Introduction</button>
