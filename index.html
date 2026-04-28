@@ -266,6 +266,26 @@
             position: relative;
         }
 
+        /* Elegant Fade-Up Animation for the Name */
+        .elegant-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1s ease-out forwards;
+            /* Optional: adds a slight, elegant spacing to the letters */
+            letter-spacing: 1px; 
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* GLITCH EFFECT FOR NAME */
         .glitch-wrapper {
             position: relative;
@@ -1277,8 +1297,9 @@
         <section class="hero" id="home">
             <div class="hero-content">
                 <div class="hero-badge">🛡️ Cybersecurity Professional</div>
-                <!-- Added 'glitch' class and data-text for animation -->
-                <h1 class="glitch" data-text="Amr Atalla">Amr Atalla</h1>
+        
+                <h1 class="elegant-reveal">Amr Atalla</h1>
+        
                 <div class="typing-container">
                     <span class="typing-text" id="typing-text"></span>
                 </div>
